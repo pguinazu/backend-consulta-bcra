@@ -9,7 +9,8 @@ const getCreditStatus = async (req, res) => {
         //200 response:
         res.status(200).json(credit);
     } catch (error) {
-        res.status(500).json({ error: 'Error al obtener datos del BCRA' });
+        //manejo de diversos errores http:
+        res.status(error.response.status).json(error.response.data);
     }
 };
 
