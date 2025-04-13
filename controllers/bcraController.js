@@ -4,13 +4,22 @@ const getCreditStatus = async (req, res) => {
     const { cuil } = req.params;
     try {
         const credit = await fetchCreditStatusFromBCRA(cuil);
-        // const evaluacion = evaluarViabilidad(credit);
-        // res.json(credit);
         //200 response:
         res.status(200).json(credit);
     } catch (error) {
-        //manejo de diversos errores http:
-        res.status(error.response.status).json(error.response.data);
+        if (error.response) {
+          // Errores del BCRA con código HTTP (404, 500, etc.)
+          return res.status(error.response.status).json({
+            error: error.response.data?.error || 'Error externo del BCRA',
+            status: error.response.status,
+          });
+        } else if (error.request) {
+          // Timeout, sin respuesta, etc.
+          return res.status(503).json({ error: 'Sin respuesta del servidor del BCRA' });
+        } else {
+          // Otro error en el código
+          return res.status(500).json({ error: 'Error interno del servidor' });
+        }
     }
 };
 
