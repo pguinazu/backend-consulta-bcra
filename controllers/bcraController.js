@@ -10,8 +10,7 @@ const getCreditStatus = async (req, res) => {
         if (error.response) {
           // Errores del BCRA con código HTTP (404, 500, etc.)
           return res.status(error.response.status).json({
-            error: error.response.data?.error || 'Error externo del BCRA',
-            status: error.response.status,
+            error: error.response.data?.error || 'Error externo del BCRA'
           });
         } else if (error.request) {
           // Timeout, sin respuesta, etc.

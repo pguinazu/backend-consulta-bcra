@@ -1,10 +1,10 @@
 const axios = require('axios');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-const VERCEL_BASE_URL = 'https://bcra-proxy-railway-production.up.railway.app/consulta';
+const RAILWAY_BASE_URL = 'https://bcra-proxy-railway-production.up.railway.app/consulta';
 
 const fetchCreditStatusFromBCRA = async (cuil) => {
-  const response = await axios.get(`${VERCEL_BASE_URL}/${cuil}`);
+  const response = await axios.get(`${RAILWAY_BASE_URL}/${cuil}`);
   return response.data;
 };
 
